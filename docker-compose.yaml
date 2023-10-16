@@ -1,0 +1,28 @@
+version: '0.0.1'
+services:
+  nest-app:
+   build:
+    context: ./
+    dockerfile: ./Dockerfile
+   depends_on:
+   - mysql-container
+   - redis-container
+   ports:
+     - '3000:3000'
+   networks:
+     - common-network
+  mysql-container:
+    image: mysql
+    networks:
+     - common-network
+    volumes:
+     - '/Users/gray/Desktop/sql-database:/var/lib/mysql'
+  redis-container:
+   image: redis
+   networks:
+     - common-network
+   volumes:
+     - '/Users/gray/Desktop/redis-test:/data'
+networks:
+  common-network:
+   driver: bridge
